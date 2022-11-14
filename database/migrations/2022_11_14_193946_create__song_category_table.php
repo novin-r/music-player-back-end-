@@ -19,6 +19,8 @@ class CreateSongCategoryTable extends Migration
             $table->timestamps();
             $table->foreign('song_id')->references('id')->on('songs')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->primary(array('song_id', 'category_id'));
+
         });
     }
 
