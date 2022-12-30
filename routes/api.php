@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\SongController;
+use App\Http\Controllers\Api\PlaylistController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -15,6 +16,10 @@ Route::middleware('auth:sanctum')->group(function (){
 Route::post('/song/store', [SongController::class, 'store']);
 Route::get('/songs', [SongController::class, 'index']);
 Route::get('/song/latest', [SongController::class, 'latest_song']);
+Route::get('/playlist/songs/{id}', [SongController::class, 'playlist_song']);
+Route::get('/playlists', [PlaylistController::class, 'index']);
+Route::post('/playlists/store', [SongController::class, 'store_in_playList']);
+
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);

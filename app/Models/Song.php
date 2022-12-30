@@ -16,6 +16,6 @@ class Song extends Model
      */
     public function roles()
     {
-        return $this->belongsToMany(Category::class, '_song_category');
+        return $this->belongsToMany(Playlist::class, 'play_list_songs');
     }
 }
