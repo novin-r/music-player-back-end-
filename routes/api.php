@@ -19,6 +19,8 @@ Route::get('/song/latest', [SongController::class, 'latest_song']);
 Route::get('/playlist/songs/{id}', [SongController::class, 'playlist_song']);
 Route::get('/playlists', [PlaylistController::class, 'index']);
 Route::post('/playlists/store', [SongController::class, 'store_in_playList']);
+Route::post('/playlists/create', [SongController::class, 'create_playList']);
+Route::get('/playlists/delete/{id}', [SongController::class, 'remove_playList']);
 
 
 Route::post('/register', [UserController::class, 'register']);
