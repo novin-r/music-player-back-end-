@@ -49,15 +49,11 @@ class SongController extends Controller
 
 
     public function store_in_playList(Request $request){
-        // try {
-            $playListSongs = playListSongs::create([
-                'song_id' => $request->song_id,
-                'category_id' => $request->category_id,
-            ]);
-        // } catch (Throwable $th) {
-        //     return $th;
-        // }
-        return "Added Succesfully";
+          PlayListSongs::create([
+            'song_id' => $request->song_id,
+            'category_id' => $request->category_id,
+          ]);
+          return "Song added to playlist successfully.";
     }
 
     public function create_playList(Request $request){

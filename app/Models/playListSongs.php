@@ -9,6 +9,6 @@ class playListSongs extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['song_id',' category_id'];
+    protected $fillable = ['song_id','category_id'];
 
 }
