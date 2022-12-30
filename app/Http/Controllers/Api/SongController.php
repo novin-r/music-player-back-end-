@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Song;
+use App\Models\playListSongs;
 use App\Http\Requests\StoreSongRequest;
 use App\Http\Requests\UpdateSongRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use wapmorgan\Mp3Info\Mp3Info;
 use Owenoj\LaravelGetId3\GetId3;
+use Illuminate\Support\Facades\DB;
+// use DB;
+
 
 class SongController extends Controller
 {
@@ -33,6 +37,31 @@ class SongController extends Controller
             'status'=>200,
             'song'=>$song
         ]);
+    }
+
+    public function playlist_song($id){
+        return DB::table('songs')
+        ->join('play_list_songs', 'play_list_songs.song_id', '=', 'songs.id')
+        ->where('play_list_songs.category_id', $id)
+        ->get();
+    }
+
+
+
+    public function store_in_playList(Request $request){
+          PlayListSongs::create([
+            'song_id' => $request->song_id,
+            'category_id' => $request->category_id,
+          ]);
+          return "Song added to playlist successfully.";
+    }
+
+    public function create_playList(Request $request){
+    
+    }
+
+    public function remove_playList(Request $request){
+    
     }
 
     public function store(Request $request)

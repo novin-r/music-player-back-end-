@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Playlist;
+use App\Models\Category;
 use App\Http\Requests\StorePlaylistRequest;
 use App\Http\Requests\UpdatePlaylistRequest;
 
@@ -13,9 +16,13 @@ class PlaylistController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $playlists = Category::orderBy('id','desc')->get();
+        return response()->json([
+            'status'=>200,
+            'playlists'=>$playlists
+        ]);
     }
 
     /**
