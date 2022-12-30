@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Song;
 use App\Models\playListSongs;
+use App\Models\playList;
 use App\Http\Requests\StoreSongRequest;
 use App\Http\Requests\UpdateSongRequest;
 use Illuminate\Support\Facades\Auth;
@@ -57,11 +58,27 @@ class SongController extends Controller
     }
 
     public function create_playList(Request $request){
-    
+        playList::create([
+            'playListName' => $request->playListName,
+          ]);
+
+          return response()->json([
+            'status' => 'success',
+            'message' => 'playlist created'
+        ], 200);
     }
 
-    public function remove_playList(Request $request){
+    public function remove_playList($id){
+        // Find the playlist to delete
+        $playlist = playList::find($id);
+
+        // Delete the playlist
+        $playlist->delete();
     
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Playlist removed successfully.'
+        ], 200);
     }
 
     public function store(Request $request)

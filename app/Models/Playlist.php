@@ -9,12 +9,14 @@ class Playlist extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['playListName'];
 
     /**
      * The songs that belong to the category.
     */
     public function roles()
     {
+
         return $this->belongsToMany(Song::class, 'play_list_songs');
     }
 }
