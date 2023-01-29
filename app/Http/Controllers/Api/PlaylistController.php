@@ -24,6 +24,21 @@ class PlaylistController extends Controller
         ]);
     }
 
+    public function updateListenedPlaylist(Request $request) {
+        $playlistId = $request->input('playlistId');
+      
+        // Update the database to store the currently listened to playlist
+        Playlist::where('id', $playlistId)
+          ->update(['is_listened' => true]);
+      
+        // Set the is_listened column to false for all other playlists
+        Playlist::where('id', '<>', $playlistId)
+          ->update(['is_listened' => false]);
+      
+        return response()->json(['status' => 200, 'message' => 'Listened playlist updated successfully']);
+    }
+      
+
     /**
      * Show the form for creating a new resource.
      *
