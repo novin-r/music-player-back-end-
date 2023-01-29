@@ -18,23 +18,19 @@ class PlaylistController extends Controller
     public function index(Request $request)
     {
         // Retrieve the playlists from the database, sorted by the is_listened column
-        $playlists = Playlist::orderBy('is_listened','desc')->get();
+        $playlists = Playlist::orderBy('last_listened_at','desc')->get();
         return response()->json([
             'status'=>200,
             'playlists'=>$playlists
         ]);
     }
 
-    public function updateListenedPlaylist(Request $request) {
+    public function updateListenedPlaylist(Request $request, $id) {
         $playlistId = $request->input('playlistId');
       
-        // Update the database to store the currently listened to playlist
-        Playlist::where('id', $playlistId)
-          ->update(['is_listened' => true]);
-      
-        // Set the is_listened column to false for all other playlists
-        Playlist::where('id', '<>', $playlistId)
-          ->update(['is_listened' => false]);
+        $playlist = Playlist::findOrFail($id);
+        $playlist->last_listened_at = now();
+        $playlist->save();
       
         return response()->json(['status' => 200, 'message' => 'Listened playlist updated successfully']);
     }
