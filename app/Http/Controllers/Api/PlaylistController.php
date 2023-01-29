@@ -17,12 +17,24 @@ class PlaylistController extends Controller
      */
     public function index(Request $request)
     {
-        $playlists = Playlist::orderBy('id','desc')->get();
+        // Retrieve the playlists from the database, sorted by the is_listened column
+        $playlists = Playlist::orderBy('last_listened_at','desc')->get();
         return response()->json([
             'status'=>200,
             'playlists'=>$playlists
         ]);
     }
+
+    public function updateListenedPlaylist(Request $request, $id) {
+        $playlistId = $request->input('playlistId');
+      
+        $playlist = Playlist::findOrFail($id);
+        $playlist->last_listened_at = now();
+        $playlist->save();
+      
+        return response()->json(['status' => 200, 'message' => 'Listened playlist updated successfully']);
+    }
+      
 
     /**
      * Show the form for creating a new resource.
