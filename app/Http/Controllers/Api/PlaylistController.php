@@ -17,7 +17,8 @@ class PlaylistController extends Controller
      */
     public function index(Request $request)
     {
-        $playlists = Playlist::orderBy('id','desc')->get();
+        // Retrieve the playlists from the database, sorted by the is_listened column
+        $playlists = Playlist::orderBy('is_listened','desc')->get();
         return response()->json([
             'status'=>200,
             'playlists'=>$playlists
